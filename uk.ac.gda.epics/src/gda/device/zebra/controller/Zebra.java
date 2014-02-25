@@ -20,158 +20,104 @@ package gda.device.zebra.controller;
 
 import gda.epics.ReadOnlyPV;
 
+import java.io.IOException;
+
 public interface Zebra {
 
-	// PC Setup
-	final public static int PC_ENC_ENC1 = 0;
-	final public static int PC_ENC_ENC2 = 1;
-	final public static int PC_ENC_ENC3 = 2;
-	final public static int PC_ENC_ENC4 = 3;
-	final public static int PC_ENC_ENCSUM = 4;
-
-	final public static int PC_DIR_POSITIVE = 0;
-	final public static int PC_DIR_NEGATIVE = 1;
+	final public static int PC_MODE_POSITION = 0;
+	final public static int PC_MODE_TIME = 1;
 
 	final public static int PC_TIMEUNIT_SEC = 1;
 	final public static int PC_TIMEUNIT_MS = 0;
 
-	// Arm
-	final public static int PC_ARM_SOURCE_SOFT = 0;
-	final public static int PC_ARM_SOURCE_EXTERNAL = 1;
+	double getPCPulseDelay() throws IOException;
 
-	// Gate
-	final public static int PC_GATE_SOURCE_POSITION = 0;
-	final public static int PC_GATE_SOURCE_TIME = 1;
-	final public static int PC_GATE_SOURCE_EXTERNAL = 2;
+	double getPCPulseDelayRBV() throws IOException;
 
-	// Pulse
-	final public static int PC_PULSE_SOURCE_POSITION = 0;
-	final public static int PC_PULSE_SOURCE_TIME = 1;
-	final public static int PC_PULSE_SOURCE_EXTERNAL = 2;
-	
-	@Deprecated
-	final public static int PC_MODE_POSITION = PC_PULSE_SOURCE_POSITION;
-	@Deprecated
-	final public static int PC_MODE_TIME = PC_PULSE_SOURCE_TIME;
+	void setPCPulseDelay(double delay) throws IOException;
 
-	double getPCPulseDelay() throws Exception;
+	double getPCPulseWidth() throws IOException;
 
-	double getPCPulseDelayRBV() throws Exception;
+	double getPCPulseWidthRBV() throws IOException;
 
-	void setPCPulseDelay(double delay) throws Exception;
+	void setPCPulseWidth(double width) throws IOException;
 
-	double getPCPulseWidth() throws Exception;
+	double getPCPulseStep() throws IOException;
 
-	double getPCPulseWidthRBV() throws Exception;
+	double getPCPulseStepRBV() throws IOException;
 
-	void setPCPulseWidth(double width) throws Exception;
+	void setPCPulseStep(double step) throws IOException;
 
-	double getPCPulseStep() throws Exception;
+	void setPCPulseSource(int ordinal) throws IOException;
 
-	double getPCPulseStepRBV() throws Exception;
+	int getPCPulseSource() throws IOException;
 
-	void setPCPulseStep(double step) throws Exception;
+	int getPCGateSource() throws IOException;
 
-	/**
-	 * @param ordinal should be PC_PULSE_SOURCE_POSITION, PC_PULSE_SOURCE_TIME or PC_PULSE_SOURCE_EXTERNAL
-	 * @throws Exception
-	 */
-	void setPCPulseSource(int ordinal) throws Exception;
+	void setPCGateSource(int ordinal) throws IOException;
 
-	int getPCPulseSource() throws Exception, Exception;
+	double getPCGateStart() throws IOException;
 
-	int getPCGateSource() throws Exception, Exception;
+	double getPCGateStartRBV() throws IOException;
 
-	/**
-	 * @param ordinal should be PC_GATE_SOURCE_POSITION, PC_GATE_SOURCE_TIME or PC_GATE_SOURCE_EXTERNAL
-	 * @throws Exception
-	 */
-	void setPCGateSource(int ordinal) throws Exception;
+	double getPCGateWidth() throws IOException;
 
-	double getPCGateStart() throws Exception;
+	int getPCGateNumberOfGates() throws IOException;
 
-	double getPCGateStartRBV() throws Exception;
+	double getPCGateStep() throws IOException;
 
-	double getPCGateWidth() throws Exception;
+	void setPCGateStart(double start) throws IOException;
 
-	int getPCGateNumberOfGates() throws Exception;
+	void setPCGateWidth(double width) throws IOException;
 
-	double getPCGateStep() throws Exception;
+	double getPCGateWidthRBV() throws IOException;
 
-	void setPCGateStart(double start) throws Exception;
+	void setPCGateNumberOfGates(int numberOfGates) throws IOException;
 
-	void setPCGateWidth(double width) throws Exception;
+	void setPCGateStep(double step) throws IOException;
 
-	double getPCGateWidthRBV() throws Exception;
+	int getPCArmSource() throws IOException;
 
-	void setPCGateNumberOfGates(int numberOfGates) throws Exception;
+	void setPCArmSource(int ordinal) throws IOException;
 
-	void setPCGateStep(double step) throws Exception;
+	boolean isPCArmed() throws IOException;
 
-	int getPCArmSource() throws Exception;
+	void pcArm() throws IOException;
 
-	/**
-	 * @param ordinal should be PC_ARM_SOURCE_SOFT or PC_ARM_SOURCE_EXTERNAL
-	 * @throws Exception
-	 */
-	void setPCArmSource(int ordinal) throws Exception;
+	void pcDisarm() throws IOException;
 
-	boolean isPCArmed() throws Exception;
+	void setPCCaptureBitField(int val) throws IOException;
 
-	void pcArm() throws Exception;
+	int getPCCaptureBitField() throws IOException;
 
-	void pcDisarm() throws Exception;
+	void setPCEnc(int val) throws IOException;
 
-	void setPCCaptureBitField(int val) throws Exception;
-
-	int getPCCaptureBitField() throws Exception;
-
-	/**
-	 * @param val should be PC_ENC_ENC1, PC_ENC_ENC2, PC_ENC_ENC3, PC_ENC_ENC4 or PC_ENC_ENCSUM
-	 * @throws Exception
-	 */
-	void setPCEnc(int val) throws Exception;
-
-	int getPCEnc() throws Exception;
+	int getPCEnc() throws IOException;
 
 	ReadOnlyPV<Double[]> getEnc1AvalPV();
 
 	ReadOnlyPV<Integer> getNumberOfPointsCapturedPV();
 
-	void setPCNumberOfPointsCaptured(int val) throws Exception;
+	void setPCNumberOfPointsCaptured(int val) throws IOException;
 
-	int getPCNumberOfPointsCaptured() throws Exception;
+	int getPCNumberOfPointsCaptured() throws IOException;
 
-	/**
-	 * @param i should be PC_TIMEUNIT_SEC or PC_TIMEUNIT_MS
-	 * @throws Exception
+	/*
+	 * 0 - ms, 1-s
 	 */
-	void setPCTimeUnit(int i) throws Exception;
+	void setPCTimeUnit(int i) throws IOException;
 
-	int getPCTimeUnit() throws Exception;
+	int getPCTimeUnit() throws IOException;
 
-	void setPCPulseMax(int numberTriggers) throws Exception;
+	void setPCPulseMax(int numberTriggers) throws IOException;
 
-	int getPCPulseMax() throws Exception, Exception;
+	int getPCPulseMax() throws IOException;
 
 	ReadOnlyPV<Integer> getNumberOfPointsDownloadedPV();
 
 	ReadOnlyPV<Double[]> getPCTimePV();
 
-	/**
-	 * @param i should be PC_DIR_POSITIVE or PC_DIR_NEGATIVE
-	 * @throws Exception
-	 */
-	void setPCDir(int i)  throws Exception;
-	int getPCDir()  throws Exception;
-	
-	void setPulseInput(int pulseId, int input) throws Exception;
-	void setPulseDelay(int pulseId, double delay) throws Exception;
-	void setPulseWidth(int pulseId, double width) throws Exception;
-	void setPulseTimeUnit(int pulseId, int timeunit) throws Exception;
-	
-	void setOutTTL(int outId, int val) throws Exception;
-	
-	void setPCArmInput(int input) throws Exception;
+	void setPCDir(int i)  throws IOException;
+	int getPCDir()  throws IOException;
 
 }

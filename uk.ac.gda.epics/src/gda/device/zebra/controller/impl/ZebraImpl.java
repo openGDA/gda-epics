@@ -21,11 +21,12 @@ package gda.device.zebra.controller.impl;
 import gda.device.zebra.controller.Zebra;
 import gda.epics.CachedLazyPVFactory;
 import gda.epics.ReadOnlyPV;
-import gda.factory.Findable;
+
+import java.io.IOException;
 
 import org.springframework.beans.factory.InitializingBean;
 
-public class ZebraImpl implements Zebra, Findable, InitializingBean {
+public class ZebraImpl implements Zebra, InitializingBean {
 
 	final public static String connected = "CONNECTED";
 	final public static String store = "STORE";
@@ -79,134 +80,133 @@ public class ZebraImpl implements Zebra, Findable, InitializingBean {
 	final public static String PCGateWidthRBV = "PC_GATE_WID:RBV";
 	final public static String PCTimeUnit = "PC_TSPRE";
 	private static final String PCPulseMax = "PC_PULSE_MAX";	
-	public static final String PCArmInput="PC_ARM_INP";
 	
 	String zebraPrefix;
 
 	CachedLazyPVFactory dev;
 
 	@Override
-	public void setPCPulseSource(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCPulseSource).putWait(val);
+	public void setPCPulseSource(int val) throws IOException {
+		dev.getPVInteger(PCPulseSource).putWait(val);
 	}
 
 	@Override
-	public int getPCPulseSource() throws Exception {
-		return dev.getIntegerPVValueCache(PCPulseSource).get();
+	public int getPCPulseSource() throws IOException {
+		return dev.getPVInteger(PCPulseSource).get();
 	}
 
 	@Override
-	public void setPCPulseDelay(double val) throws Exception {
-		dev.getDoublePVValueCache(PCPulseDelay).putWait(val);
+	public void setPCPulseDelay(double val) throws IOException {
+		dev.getPVDouble(PCPulseDelay).putWait(val);
 	}
 
 	@Override
-	public double getPCPulseDelay() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseDelay).get();
+	public double getPCPulseDelay() throws IOException {
+		return dev.getPVDouble(PCPulseDelay).get();
 	}
 	@Override
-	public double getPCPulseDelayRBV() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseDelayRBV).get();
-	}
-
-	@Override
-	public void setPCPulseWidth(double val) throws Exception {
-		dev.getDoublePVValueCache(PCPulseWidth).putWait(val);
+	public double getPCPulseDelayRBV() throws IOException {
+		return dev.getPVDouble(PCPulseDelayRBV).get();
 	}
 
 	@Override
-	public double getPCPulseWidth() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseWidth).get();
-	}
-	@Override
-	public double getPCPulseWidthRBV() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseWidthRBV).get();
+	public void setPCPulseWidth(double val) throws IOException {
+		dev.getPVDouble(PCPulseWidth).putWait(val);
 	}
 
 	@Override
-	public void setPCPulseStep(double val) throws Exception {
-		dev.getDoublePVValueCache(PCPulseStep).putWait(val);
+	public double getPCPulseWidth() throws IOException {
+		return dev.getPVDouble(PCPulseWidth).get();
+	}
+	@Override
+	public double getPCPulseWidthRBV() throws IOException {
+		return dev.getPVDouble(PCPulseWidthRBV).get();
 	}
 
 	@Override
-	public double getPCPulseStep() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseStep).get();
-	}
-	@Override
-	public double getPCPulseStepRBV() throws Exception {
-		return dev.getDoublePVValueCache(PCPulseStepRBV).get();
+	public void setPCPulseStep(double val) throws IOException {
+		dev.getPVDouble(PCPulseStep).putWait(val);
 	}
 
 	@Override
-	public int getPCPulseMax() throws Exception {
-		return dev.getIntegerPVValueCache(PCPulseMax).get();
+	public double getPCPulseStep() throws IOException {
+		return dev.getPVDouble(PCPulseStep).get();
+	}
+	@Override
+	public double getPCPulseStepRBV() throws IOException {
+		return dev.getPVDouble(PCPulseStepRBV).get();
 	}
 
 	@Override
-	public void setPCPulseMax(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCPulseMax).putWait(val);
+	public int getPCPulseMax() throws IOException {
+		return dev.getPVInteger(PCPulseMax).get();
+	}
+
+	@Override
+	public void setPCPulseMax(int val) throws IOException {
+		dev.getPVInteger(PCPulseMax).putWait(val);
 	}
 	
 	@Override
-	public void setPCGateSource(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCGateSource).putWait(val);
+	public void setPCGateSource(int val) throws IOException {
+		dev.getPVInteger(PCGateSource).putWait(val);
 	}
 
 	@Override
-	public int getPCGateSource() throws Exception {
+	public int getPCGateSource() throws IOException {
 		return dev.getPVInteger(PCGateSource).get();
 	}
 
 	@Override
-	public void setPCGateStart(double val) throws Exception {
-		dev.getDoublePVValueCache(PCGateStart).putWait(val);
+	public void setPCGateStart(double val) throws IOException {
+		dev.getPVDouble(PCGateStart).putWait(val);
 	}
 
 	@Override
-	public double getPCGateStart() throws Exception {
-		return dev.getDoublePVValueCache(PCGateStart).get();
+	public double getPCGateStart() throws IOException {
+		return dev.getPVDouble(PCGateStart).get();
 	}
 	@Override
-	public double getPCGateStartRBV() throws Exception {
-		return dev.getDoublePVValueCache(PCGateStartRBV).get();
-	}
-
-	@Override
-	public void setPCGateWidth(double val) throws Exception {
-		dev.getDoublePVValueCache(PCGateWidth).putWait(val);
+	public double getPCGateStartRBV() throws IOException {
+		return dev.getPVDouble(PCGateStartRBV).get();
 	}
 
 	@Override
-	public double getPCGateWidth() throws Exception {
-		return dev.getDoublePVValueCache(PCGateWidth).get();
-	}
-	@Override
-	public double getPCGateWidthRBV() throws Exception {
-		return dev.getDoublePVValueCache(PCGateWidthRBV).get();
+	public void setPCGateWidth(double val) throws IOException {
+		dev.getPVDouble(PCGateWidth).putWait(val);
 	}
 
 	@Override
-	public void setPCGateStep(double val) throws Exception {
-		dev.getDoublePVValueCache(PCGateStep).putWait(val);
+	public double getPCGateWidth() throws IOException {
+		return dev.getPVDouble(PCGateWidth).get();
+	}
+	@Override
+	public double getPCGateWidthRBV() throws IOException {
+		return dev.getPVDouble(PCGateWidthRBV).get();
 	}
 
 	@Override
-	public double getPCGateStep() throws Exception {
-		return dev.getDoublePVValueCache(PCGateStep).get();
+	public void setPCGateStep(double val) throws IOException {
+		dev.getPVDouble(PCGateStep).putWait(val);
 	}
 
 	@Override
-	public void setPCArmSource(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCArmSource).putWait(val);
+	public double getPCGateStep() throws IOException {
+		return dev.getPVDouble(PCGateStep).get();
 	}
 
 	@Override
-	public int getPCArmSource() throws Exception {
-		return dev.getIntegerPVValueCache(PCArmSource).get();
+	public void setPCArmSource(int val) throws IOException {
+		dev.getPVInteger(PCArmSource).putWait(val);
 	}
 
 	@Override
-	public void pcArm() throws Exception {
+	public int getPCArmSource() throws IOException {
+		return dev.getPVInteger(PCArmSource).get();
+	}
+
+	@Override
+	public void pcArm() throws IOException {
 		dev.getPVInteger(PCArm).putWait(1);
 /*		dev.getPVInteger(PCArm).putNoWait(1);
 		try {
@@ -217,63 +217,63 @@ public class ZebraImpl implements Zebra, Findable, InitializingBean {
 */	}
 
 	@Override
-	public void pcDisarm() throws Exception {
+	public void pcDisarm() throws IOException {
 		dev.getPVInteger(PCDisArm).putWait(1,5);
 	}
 
 	@Override
-	public boolean isPCArmed() throws Exception {
+	public boolean isPCArmed() throws IOException {
 		return dev.getPVInteger(PCArmOut).get() == 1;
 	}
 
 	@Override
-	public void setPCCaptureBitField(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCCaptureBitField).putWait(val);
+	public void setPCCaptureBitField(int val) throws IOException {
+		dev.getPVInteger(PCCaptureBitField).putWait(val);
 	}
 
 	@Override
-	public int getPCCaptureBitField() throws Exception {
-		return dev.getIntegerPVValueCache(PCCaptureBitField).get();
+	public int getPCCaptureBitField() throws IOException {
+		return dev.getPVInteger(PCCaptureBitField).get();
 	}
 
 	@Override
-	public void setPCEnc(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCEnc).putWait(val);
+	public void setPCEnc(int val) throws IOException {
+		dev.getPVInteger(PCEnc).putWait(val);
 	}
 
 	@Override
-	public int getPCEnc() throws Exception {
-		return dev.getIntegerPVValueCache(PCEnc).get();
+	public int getPCEnc() throws IOException {
+		return dev.getPVInteger(PCEnc).get();
 	}
 
 	@Override
-	public void setPCTimeUnit(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCTimeUnit).putWait(val);
+	public void setPCTimeUnit(int val) throws IOException {
+		dev.getPVInteger(PCTimeUnit).putWait(val);
 	}
 
 	@Override
-	public int getPCTimeUnit() throws Exception {
-		return dev.getIntegerPVValueCache(PCTimeUnit).get();
+	public int getPCTimeUnit() throws IOException {
+		return dev.getPVInteger(PCTimeUnit).get();
 	}
 	
 	@Override
-	public void setPCGateNumberOfGates(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCGateNumberOfGates).putWait(val);
+	public void setPCGateNumberOfGates(int val) throws IOException {
+		dev.getPVInteger(PCGateNumberOfGates).putWait(val);
 	}
 
 	@Override
-	public int getPCGateNumberOfGates() throws Exception {
-		return dev.getIntegerPVValueCache(PCGateNumberOfGates).get();
+	public int getPCGateNumberOfGates() throws IOException {
+		return dev.getPVInteger(PCGateNumberOfGates).get();
 	}
 
 	@Override
-	public void setPCNumberOfPointsCaptured(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCNumberOfPointsCaptured).putWait(val);
+	public void setPCNumberOfPointsCaptured(final int val) throws IOException {
+		dev.getPVInteger(PCNumberOfPointsCaptured).putWait(val);
 	}
 
 	@Override
-	public int getPCNumberOfPointsCaptured() throws Exception {
-		return dev.getIntegerPVValueCache(PCNumberOfPointsCaptured).get();
+	public int getPCNumberOfPointsCaptured() throws IOException {
+		return dev.getPVInteger(PCNumberOfPointsCaptured).get();
 	}
 
 	
@@ -287,8 +287,6 @@ public class ZebraImpl implements Zebra, Findable, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if( name == null || name.isEmpty())
-			throw new Exception("name is not set");
 		if (zebraPrefix == null || zebraPrefix.isEmpty())
 			throw new Exception("zebraPrefix is not set");
 		dev = new CachedLazyPVFactory(zebraPrefix);
@@ -316,71 +314,13 @@ public class ZebraImpl implements Zebra, Findable, InitializingBean {
 	}
 
 	@Override
-	public void setPCDir(int val) throws Exception {
-		dev.getIntegerPVValueCache(PCDir).putWait(val);
+	public void setPCDir(int val) throws IOException {
+		dev.getPVInteger(PCDir).putWait(val);
 	}
 
 	@Override
-	public int getPCDir() throws Exception {
-		return dev.getIntegerPVValueCache(PCDir).get();
-	}
-
-	@Override
-	public void setPulseInput(int pulseId, int input) throws Exception {
-		dev.getIntegerPVValueCache("PULSE"+pulseId+"_INP").putWait(input);
-	}
-
-	@Override
-	public void setPulseDelay(int pulseId, double delay) throws Exception {
-		dev.getDoublePVValueCache("PULSE"+pulseId +"_DLY").putWait(delay);
-	}
-
-	@Override
-	public void setPulseWidth(int pulseId, double width) throws Exception {
-		dev.getDoublePVValueCache("PULSE"+pulseId +"_WID").putWait(width);
-	}
-
-
-
-	@Override
-	public void setPulseTimeUnit(int pulseId, int timeunit) throws Exception {
-		dev.getIntegerPVValueCache("PULSE"+pulseId+"_PRE").putWait(timeunit);
-	}
-
-	@Override
-	public void setOutTTL(int outId, int val) throws Exception {
-		dev.getIntegerPVValueCache("OUT"+outId+"_TTL").putWait(val);
+	public int getPCDir() throws IOException {
+		return dev.getPVInteger(PCDir).get();
 	}
 	
-	public void setValue(String beforeUnderscore, int beforeUnderscoreId, String afterUnderscore, int afterUnderscoreId,int val) throws Exception {
-		String pvSuffix = beforeUnderscore;
-		if (beforeUnderscoreId > 0) {
-			pvSuffix += beforeUnderscoreId;
-		}
-		pvSuffix += "_";
-		pvSuffix += afterUnderscore;
-		if (afterUnderscoreId > 0) {
-			pvSuffix += afterUnderscoreId;
-		}
-		dev.getIntegerPVValueCache(pvSuffix).putWait(val);
-	}
-
-
-	String name;
-	@Override
-	public void setName(String name) {
-		this.name=name;
-		
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setPCArmInput(int input) throws Exception {
-		dev.getIntegerPVValueCache(PCArmInput).putWait(input);
-
-	}	
 }
